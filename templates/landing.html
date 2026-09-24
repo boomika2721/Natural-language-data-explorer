@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Natural Language Data Explorer (NLDE) - Multi-User AI Analytics Platform</title>
+    <meta name="description" content="Upload data, ask questions in natural language, generate SQL automatically, visualize insights, and export reports.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/css/style.css">
+
+    <style>
+        .hero-section {
+            padding: 90px 0 60px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-glow {
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(13, 110, 253, 0.25) 0%, rgba(111, 66, 193, 0.15) 50%, rgba(0, 0, 0, 0) 70%);
+            filter: blur(60px);
+            z-index: 0;
+            pointer-events: none;
+        }
+        .feature-card {
+            border: 1px solid var(--border-color);
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.25s ease;
+            height: 100%;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(13, 110, 253, 0.5);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+        }
+        .feature-icon-box {
+            width: 54px;
+            height: 54px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            margin-bottom: 18px;
+        }
+        .demo-preview-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+        }
+        .pulse-badge {
+            animation: pulse-ring 2s infinite;
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(0.98); opacity: 0.9; }
+            50% { transform: scale(1.02); opacity: 1; }
+            100% { transform: scale(0.98); opacity: 0.9; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Landing Navigation -->
+    <nav class="navbar navbar-expand-lg border-bottom sticky-top glass-nav">
+        <div class="container px-lg-4">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="/">
+                <div class="brand-icon-wrapper">
+                    <i class="bi bi-cpu-fill text-gradient"></i>
+                </div>
+                <div>
+                    <span class="brand-title">NLDE</span>
+                    <span class="brand-sub">Universal AI Explorer</span>
+                </div>
+                <span class="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill ms-1">v2.5 Pro</span>
+            </a>
+
+            <div class="d-flex align-items-center gap-2 ms-auto">
+                <button type="button" class="btn btn-outline-secondary btn-sm theme-toggle-btn me-2" id="btn-theme-toggle" title="Toggle Theme">
+                    <i class="bi bi-moon-stars-fill" id="theme-icon"></i>
+                </button>
+                <a href="/login" class="btn btn-outline-primary btn-sm rounded-pill px-3 fw-bold">
+                    <i class="bi bi-box-arrow-in-right me-1"></i> Sign In
+                </a>
+                <a href="/register" class="btn btn-primary btn-sm rounded-pill px-3 shadow-sm fw-bold">
+                    <i class="bi bi-person-plus-fill me-1"></i> Register
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-glow"></div>
+        <div class="container position-relative" style="z-index: 1;">
+            <div class="text-center max-w-850 mx-auto">
+                <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill bg-primary-subtle text-primary border border-primary-subtle mb-4 pulse-badge">
+                    <i class="bi bi-shield-lock-fill"></i>
+                    <span class="small fw-bold">Secure Multi-User Analytics & AI SQL Platform</span>
+                </div>
+                
+                <h1 class="display-4 fw-extrabold text-gradient mb-3">
+                    Natural Language Data Explorer
+                </h1>
+                
+                <p class="lead text-secondary mb-4 mx-auto" style="max-width: 720px; font-size: 1.25rem;">
+                    Upload data, ask questions in natural language, generate SQL automatically, visualize insights, and export reports.
+                </p>
+
+                <div class="d-flex align-items-center justify-content-center gap-3 flex-wrap mb-5">
+                    <a href="/login" class="btn btn-primary btn-lg rounded-pill px-4 py-2 shadow-sm d-flex align-items-center gap-2 fw-bold">
+                        <span>Launch Dashboard</span>
+                        <i class="bi bi-arrow-right-circle-fill"></i>
+                    </a>
+                    <a href="/register" class="btn btn-outline-secondary btn-lg rounded-pill px-4 py-2 d-flex align-items-center gap-2">
+                        <i class="bi bi-person-plus"></i>
+                        <span>Register New User</span>
+                    </a>
+                </div>
+
+                <!-- Demo Login Shortcut Banner -->
+                <div class="alert alert-info border-info-subtle bg-info-subtle text-info-emphasis rounded-4 p-3 d-inline-block text-start shadow-sm mb-4">
+                    <div class="d-flex align-items-center gap-2 fw-bold mb-1">
+                        <i class="bi bi-key-fill text-info"></i>
+                        <span>Instant Demo Credentials</span>
+                    </div>
+                    <div class="small">
+                        <strong>Admin:</strong> <code>admin@nlde.com</code> / <code>Admin@123</code> &bull; 
+                        <strong>Analyst:</strong> <code>demo@nlde.com</code> / <code>Demo@123</code>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactive UI Preview Card -->
+            <div class="demo-preview-card mt-3">
+                <div class="d-flex align-items-center justify-content-between border-bottom pb-3 mb-3">
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="badge bg-danger rounded-circle p-1"></span>
+                        <span class="badge bg-warning rounded-circle p-1"></span>
+                        <span class="badge bg-success rounded-circle p-1"></span>
+                        <span class="text-secondary small ms-2"><i class="bi bi-shield-check text-success me-1"></i> Multi-User Isolation & Safe Read-Only SQL Engine</span>
+                    </div>
+                    <span class="badge bg-primary-subtle text-primary border border-primary-subtle">Live Demo Session</span>
+                </div>
+
+                <div class="row g-3 align-items-center">
+                    <div class="col-lg-8">
+                        <div class="p-3 rounded-3 border bg-body-tertiary">
+                            <div class="d-flex align-items-center gap-2 text-primary fw-bold mb-2">
+                                <i class="bi bi-chat-quote-fill"></i>
+                                <span>Question (English or Tamil):</span>
+                            </div>
+                            <div class="p-2 rounded bg-body border font-monospace text-success fw-semibold">
+                                "Show top 5 students from Chennai with CGPA > 8.5" / "சென்னையில் அதிக சிஜிபிஏ பெற்ற மாணவர்கள் யார்?"
+                            </div>
+                            <div class="mt-2 text-secondary small d-flex align-items-center gap-2">
+                                <span class="badge bg-success-subtle text-success border border-success-subtle"><i class="bi bi-check-circle me-1"></i>Safe SELECT Verified</span>
+                                <span>&rarr; Confidence: <strong>98%</strong></span>
+                                <span>&bull; AI Explanation & Instant Chart Generation</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 text-center">
+                        <div class="p-3 rounded-3 border bg-body-tertiary">
+                            <div class="text-secondary small fw-bold mb-1">AUTOMATED EXPORT FORMATS</div>
+                            <div class="d-flex justify-content-center gap-2">
+                                <span class="badge bg-danger-subtle text-danger border border-danger-subtle p-2"><i class="bi bi-file-earmark-pdf-fill me-1"></i>PDF</span>
+                                <span class="badge bg-success-subtle text-success border border-success-subtle p-2"><i class="bi bi-file-earmark-excel-fill me-1"></i>Excel</span>
+                                <span class="badge bg-info-subtle text-info border border-info-subtle p-2"><i class="bi bi-filetype-csv me-1"></i>CSV</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Platform Features Grid -->
+    <section class="py-5 bg-body-tertiary border-top border-bottom">
+        <div class="container">
+            <div class="text-center mb-5">
+                <span class="text-primary fw-bold text-uppercase small letter-spacing-1">Enterprise Analytics Capabilities</span>
+                <h2 class="fw-bold mt-1">Built for Non-Technical Users & Data Scientists</h2>
+                <p class="text-secondary">Explore data securely without writing a single line of complex SQL code.</p>
+            </div>
+
+            <div class="row g-4">
+                <!-- Feature 1 -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="feature-icon-box bg-primary-subtle text-primary">
+                            <i class="bi bi-translate"></i>
+                        </div>
+                        <h5 class="fw-bold mb-2">Multilingual NLP & Voice Query</h5>
+                        <p class="text-secondary small mb-0">
+                            Ask questions freely in English or Tamil. Built-in speech recognition allows hands-free voice exploration of any dataset.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="feature-icon-box bg-success-subtle text-success">
+                            <i class="bi bi-shield-check"></i>
+                        </div>
+                        <h5 class="fw-bold mb-2">Read-Only SQL & Injection Guard</h5>
+                        <p class="text-secondary small mb-0">
+                            Guarantees complete database safety. Rejects destructive operations (DROP, DELETE, ALTER) and strictly allows verified SELECT queries.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="feature-icon-box bg-info-subtle text-info">
+                            <i class="bi bi-file-earmark-spreadsheet-fill"></i>
+                        </div>
+                        <h5 class="fw-bold mb-2">Dynamic CSV & Excel Upload</h5>
+                        <p class="text-secondary small mb-0">
+                            Upload any spreadsheet. Automatically generates SQLite tables, profiles columns, detects data types, and prepares instant NLP querying.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="feature-icon-box bg-warning-subtle text-warning">
+                            <i class="bi bi-graph-up-arrow"></i>
+                        </div>
+                        <h5 class="fw-bold mb-2">Predictive AI & Forecasting</h5>
+                        <p class="text-secondary small mb-0">
+                            Detects numeric correlations, calculates Pearson coefficients, fits linear regressions, and generates forecasts on any uploaded dataset.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Feature 5 -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="feature-icon-box bg-danger-subtle text-danger">
+                            <i class="bi bi-pie-chart-fill"></i>
+                        </div>
+                        <h5 class="fw-bold mb-2">Automated Dynamic Charts</h5>
+                        <p class="text-secondary small mb-0">
+                            Intelligently chooses the best visualization (Bar, Line, Pie, Doughnut, Radar) based on query shapes and distributions.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Feature 6 -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="feature-icon-box bg-secondary-subtle text-secondary">
+                            <i class="bi bi-people-fill text-purple"></i>
+                        </div>
+                        <h5 class="fw-bold mb-2">Multi-User Dataset Isolation</h5>
+                        <p class="text-secondary small mb-0">
+                            Complete security isolation. Each user manages their own datasets, queries, and reports. Comprehensive Admin panel for oversight.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-4 border-top">
+        <div class="container d-flex flex-column flex-sm-row justify-content-between align-items-center gap-2">
+            <div class="d-flex align-items-center gap-2 text-secondary small">
+                <i class="bi bi-cpu text-primary"></i>
+                <span>&copy; 2026 Natural Language Data Explorer (NLDE). All rights reserved.</span>
+            </div>
+            <div class="d-flex gap-3 small">
+                <a href="/login" class="text-secondary text-decoration-none">Sign In</a>
+                <a href="/register" class="text-secondary text-decoration-none">Register</a>
+                <span class="text-secondary">&bull;</span>
+                <span class="text-success"><i class="bi bi-check2-circle me-1"></i>Production Ready</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Theme toggle logic
+        const themeToggleBtn = document.getElementById('btn-theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const htmlElement = document.documentElement;
+
+        const savedTheme = localStorage.getItem('nlde_theme') || 'dark';
+        htmlElement.setAttribute('data-bs-theme', savedTheme);
+        updateThemeIcon(savedTheme);
+
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-bs-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            htmlElement.setAttribute('data-bs-theme', newTheme);
+            localStorage.setItem('nlde_theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+
+        function updateThemeIcon(theme) {
+            if (theme === 'dark') {
+                themeIcon.className = 'bi bi-moon-stars-fill text-warning';
+            } else {
+                themeIcon.className = 'bi bi-sun-fill text-warning';
+            }
+        }
+    </script>
+</body>
+</html>

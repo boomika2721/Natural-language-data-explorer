@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account - Natural Language Data Explorer (NLDE)</title>
+    <meta name="description" content="Register a new user or administrator account on the NLDE multi-user analytics platform.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/css/style.css">
+
+    <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg-body, #0b0f19);
+        }
+        .auth-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 15px;
+            position: relative;
+        }
+        .auth-glow {
+            position: absolute;
+            width: 500px;
+            height: 380px;
+            background: radial-gradient(circle, rgba(111, 66, 193, 0.22) 0%, rgba(13, 110, 253, 0.12) 50%, rgba(0, 0, 0, 0) 70%);
+            filter: blur(50px);
+            z-index: 0;
+            pointer-events: none;
+        }
+        .auth-card {
+            width: 100%;
+            max-width: 480px;
+            background: var(--card-bg, #111827);
+            border: 1px solid var(--border-color, rgba(255, 255, 255, 0.1));
+            border-radius: 20px;
+            padding: 36px 30px;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+            position: relative;
+            z-index: 1;
+        }
+        .form-control:focus, .form-select:focus {
+            box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.25);
+            border-color: #0d6efd;
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Minimal Nav -->
+    <nav class="navbar border-bottom glass-nav">
+        <div class="container px-3">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="/">
+                <div class="brand-icon-wrapper">
+                    <i class="bi bi-cpu-fill text-gradient"></i>
+                </div>
+                <div>
+                    <span class="brand-title">NLDE</span>
+                    <span class="brand-sub">Universal AI Explorer</span>
+                </div>
+            </a>
+
+            <div class="d-flex align-items-center gap-2">
+                <button type="button" class="btn btn-outline-secondary btn-sm theme-toggle-btn" id="btn-theme-toggle" title="Toggle Theme">
+                    <i class="bi bi-moon-stars-fill" id="theme-icon"></i>
+                </button>
+                <a href="/" class="btn btn-outline-secondary btn-sm rounded-pill px-3">
+                    <i class="bi bi-arrow-left me-1"></i> Home
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Auth Form Container -->
+    <div class="auth-container">
+        <div class="auth-glow"></div>
+        <div class="auth-card">
+            <div class="text-center mb-4">
+                <div class="d-inline-flex p-3 rounded-circle bg-purple-subtle text-purple mb-3">
+                    <i class="bi bi-person-badge-fill fs-3 text-primary"></i>
+                </div>
+                <h3 class="fw-bold mb-1">Create an Account</h3>
+                <p class="text-secondary small mb-0">Join the NLDE Multi-User Analytics Platform</p>
+            </div>
+
+            <!-- Flash Messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category if category != 'error' else 'danger' }} alert-dismissible fade show p-2 px-3 small rounded-3" role="alert">
+                            <i class="bi bi-info-circle-fill me-1"></i> {{ message }}
+                            <button type="button" class="btn-close p-2" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <form method="POST" action="/register" id="registerForm">
+                <!-- Full Name -->
+                <div class="mb-3">
+                    <label for="full_name" class="form-label small fw-semibold text-secondary">Full Name</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-body-tertiary border-end-0 text-secondary">
+                            <i class="bi bi-person"></i>
+                        </span>
+                        <input type="text" class="form-control border-start-0" id="full_name" name="full_name" 
+                               placeholder="e.g. John Doe" required autofocus value="{{ full_name or '' }}">
+                    </div>
+                </div>
+
+                <!-- Email -->
+                <div class="mb-3">
+                    <label for="email" class="form-label small fw-semibold text-secondary">Email Address</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-body-tertiary border-end-0 text-secondary">
+                            <i class="bi bi-envelope"></i>
+                        </span>
+                        <input type="email" class="form-control border-start-0" id="email" name="email" 
+                               placeholder="john@example.com" required value="{{ email or '' }}">
+                    </div>
+                </div>
+
+                <!-- Role Selection -->
+                <div class="mb-3">
+                    <label for="role" class="form-label small fw-semibold text-secondary">Platform Role</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-body-tertiary border-end-0 text-secondary">
+                            <i class="bi bi-award"></i>
+                        </span>
+                        <select class="form-select border-start-0" id="role" name="role" required>
+                            <option value="User" selected>User (Data Analyst / Explorer)</option>
+                            <option value="Admin">Administrator (Full System Control)</option>
+                        </select>
+                    </div>
+                    <div class="form-text small text-secondary">Users have isolated datasets; Admins can manage all users and datasets.</div>
+                </div>
+
+                <!-- Password -->
+                <div class="mb-3">
+                    <label for="password" class="form-label small fw-semibold text-secondary">Password</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-body-tertiary border-end-0 text-secondary">
+                            <i class="bi bi-lock"></i>
+                        </span>
+                        <input type="password" class="form-control border-start-0" id="password" name="password" 
+                               placeholder="Min 6 characters" minlength="6" required>
+                    </div>
+                </div>
+
+                <!-- Confirm Password -->
+                <div class="mb-3">
+                    <label for="confirm_password" class="form-label small fw-semibold text-secondary">Confirm Password</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-body-tertiary border-end-0 text-secondary">
+                            <i class="bi bi-check2-circle"></i>
+                        </span>
+                        <input type="password" class="form-control border-start-0" id="confirm_password" name="confirm_password" 
+                               placeholder="Re-enter password" required>
+                    </div>
+                    <div id="passwordMismatch" class="text-danger small mt-1 d-none">Passwords do not match.</div>
+                </div>
+
+                <!-- Terms acknowledgment -->
+                <div class="form-check mb-4">
+                    <input class="form-check-input" type="checkbox" id="termsCheck" required checked>
+                    <label class="form-check-label small text-secondary" for="termsCheck">
+                        I agree to the platform safety and data policies
+                    </label>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary w-100 py-2 rounded-pill fw-bold shadow-sm d-flex align-items-center justify-content-center gap-2" id="submitRegisterBtn">
+                    <i class="bi bi-person-check-fill"></i>
+                    <span>Register New User</span>
+                </button>
+            </form>
+
+            <!-- Already have an account? -->
+            <div class="text-center mt-4 pt-3 border-top">
+                <span class="text-secondary small">Already have an account?</span>
+                <a href="/login" class="fw-bold text-primary text-decoration-none ms-1 small">
+                    Sign In
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Client-side password confirmation validation
+        const pwdInput = document.getElementById('password');
+        const confirmInput = document.getElementById('confirm_password');
+        const mismatchAlert = document.getElementById('passwordMismatch');
+        const form = document.getElementById('registerForm');
+
+        function validateMatch() {
+            if (confirmInput.value && pwdInput.value !== confirmInput.value) {
+                mismatchAlert.classList.remove('d-none');
+                return false;
+            } else {
+                mismatchAlert.classList.add('d-none');
+                return true;
+            }
+        }
+
+        pwdInput.addEventListener('input', validateMatch);
+        confirmInput.addEventListener('input', validateMatch);
+
+        form.addEventListener('submit', (e) => {
+            if (!validateMatch()) {
+                e.preventDefault();
+                confirmInput.focus();
+            }
+        });
+
+        // Theme toggle logic
+        const themeToggleBtn = document.getElementById('btn-theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const htmlElement = document.documentElement;
+
+        const savedTheme = localStorage.getItem('nlde_theme') || 'dark';
+        htmlElement.setAttribute('data-bs-theme', savedTheme);
+        updateThemeIcon(savedTheme);
+
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-bs-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            htmlElement.setAttribute('data-bs-theme', newTheme);
+            localStorage.setItem('nlde_theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+
+        function updateThemeIcon(theme) {
+            if (theme === 'dark') {
+                themeIcon.className = 'bi bi-moon-stars-fill text-warning';
+            } else {
+                themeIcon.className = 'bi bi-sun-fill text-warning';
+            }
+        }
+    </script>
+</body>
+</html>
